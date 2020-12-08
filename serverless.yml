@@ -1,0 +1,26 @@
+service: serverless-api
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: python3.8
+  memorySize: 256
+  region: ap-southeast-1
+  stage: ${opt:stage, 'test'}
+  timeout: 30
+  environment:
+    account_sid:  "ACd2653a1768a98a630683cb57600b89be"
+    auth_token: "18574d4c76cf6ee4495e4e87da444ed2"
+    
+functions:
+  twilio_sms:
+    handler: lambda_functions/twilio_sms.index
+    name: Twilio SMS Api Sample
+    description: Twilio Demo serverless api using python 3
+    events:
+      - http:
+          path: /twilio
+          method: post
+          integration: lambda
+          private: true
+          cors: true
